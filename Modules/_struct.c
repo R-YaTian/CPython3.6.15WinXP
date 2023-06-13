@@ -1657,7 +1657,11 @@ unpackiter_iternext(unpackiterobject *self)
 }
 
 static PyTypeObject unpackiter_type = {
+#ifdef __CYGWIN__
+    PyVarObject_HEAD_INIT(NULL, 0)
+#else
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
+#endif
     "unpack_iterator",                          /* tp_name */
     sizeof(unpackiterobject),                   /* tp_basicsize */
     0,                                          /* tp_itemsize */
@@ -1709,7 +1713,11 @@ s_iter_unpack(PyObject *_so, PyObject *input)
         return NULL;
     }
 
+#ifdef __CYGWIN__
     self = (unpackiterobject *) PyType_GenericAlloc(&unpackiter_type, 0);
+#else
+    self = (unpackiterobject *) Py_TYPE(&unpackiter_type) = &PyType_Type;
+#endif
     if (self == NULL)
         return NULL;
 
