@@ -46,6 +46,7 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #ifdef MS_WINDOWS
 #include <windows.h>
+#include "VersionHelpers.h"
 #endif
 
 /*[clinic input]
@@ -7501,7 +7502,13 @@ static DWORD
 encode_code_page_flags(UINT code_page, const char *errors)
 {
     if (code_page == CP_UTF8) {
-        return WC_ERR_INVALID_CHARS;
+        if (IsWindowsVersionOrGreater(6, 0, 0))
+            /* CP_UTF8 supports WC_ERR_INVALID_CHARS on Windows Vista
+               and later */
+            return WC_ERR_INVALID_CHARS;
+        else
+            /* CP_UTF8 only supports flags=0 on Windows older than Vista */
+            return 0;
     }
     else if (code_page == CP_UTF7) {
         /* CP_UTF7 only supports flags=0 */
