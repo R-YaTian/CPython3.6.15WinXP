@@ -23,5 +23,6 @@
     <None Include="..\Lib\importlib\_bootstrap.py">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\Lib\importlib\_bootstrap_external.py" />
   </ItemGroup>
 </Project>
