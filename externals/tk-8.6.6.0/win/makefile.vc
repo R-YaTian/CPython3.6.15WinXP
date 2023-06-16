@@ -458,7 +458,7 @@ cdebug	= -Zi -WX $(DEBUGFLAGS)
 
 ### Declarations common to all compiler options
 cwarn = $(WARNINGS) -D _CRT_SECURE_NO_DEPRECATE -D _CRT_NONSTDC_NO_DEPRECATE
-cflags = -nologo -c $(COMPILERFLAGS) $(cwarn) -Fp$(TMP_DIR)^\
+cflags = -nologo -c $(COMPILERFLAGS) $(cwarn) -D _USING_V110_SDK71_ -Fp$(TMP_DIR)^\
 
 !if $(MSVCRT)
 !if $(DEBUG) && !$(UNCHECKED)
@@ -495,7 +495,7 @@ ldebug	= $(ldebug) -debug -debugtype:cv
 !endif
 
 ### Declarations common to all linker options
-lflags	= -nologo -machine:$(MACHINE) $(LINKERFLAGS) $(ldebug)
+lflags	= -nologo -subsystem:console,"5.01" -machine:$(MACHINE) $(LINKERFLAGS) $(ldebug)
 
 !if $(PROFILE)
 lflags	= $(lflags) -profile
