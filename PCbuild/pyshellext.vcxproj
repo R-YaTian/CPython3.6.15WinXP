@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\PC\pyshellext.def" />
+    <None Include="..\PC\pyshellext.rgs" />
     <None Include="..\PC\pyshellext_d.def" />
   </ItemGroup>
   <ItemGroup>
