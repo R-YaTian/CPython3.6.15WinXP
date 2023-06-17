@@ -7,7 +7,7 @@ set this=%~n0
 
 rem call ..\PCbuild\find_python.bat %PYTHON%
 
-if not defined PYTHON set PYTHON=py
+if not defined PYTHON set PYTHON=python32
 
 if not defined SPHINXBUILD (
     %PYTHON% -c "import sphinx" > nul 2> nul
