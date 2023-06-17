@@ -8,9 +8,9 @@ import tempfile
 __all__ = ["version", "bootstrap"]
 
 
-_SETUPTOOLS_VERSION = "40.6.2"
+_SETUPTOOLS_VERSION = "59.6.0"
 
-_PIP_VERSION = "18.1"
+_PIP_VERSION = "21.3.1"
 
 _PROJECTS = [
     ("setuptools", _SETUPTOOLS_VERSION),
@@ -93,7 +93,7 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
         # additional paths that need added to sys.path
         additional_paths = []
         for project, version in _PROJECTS:
-            wheel_name = "{}-{}-py2.py3-none-any.whl".format(project, version)
+            wheel_name = "{}-{}-py3-none-any.whl".format(project, version)
             whl = pkgutil.get_data(
                 "ensurepip",
                 "_bundled/{}".format(wheel_name),

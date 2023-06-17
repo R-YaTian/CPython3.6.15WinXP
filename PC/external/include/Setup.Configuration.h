@@ -86,6 +86,11 @@ typedef struct ISetupInstance ISetupInstance;
 typedef struct ISetupInstance2 ISetupInstance2;
 #endif
 
+#ifndef __ISetupInstanceCatalog_FWD_DEFINED__
+#define __ISetupInstanceCatalog_FWD_DEFINED__
+typedef struct ISetupInstanceCatalog ISetupInstanceCatalog;
+#endif
+
 #ifndef __ISetupLocalizedProperties_FWD_DEFINED__
 #define __ISetupLocalizedProperties_FWD_DEFINED__
 typedef struct ISetupLocalizedProperties ISetupLocalizedProperties;
@@ -111,9 +116,24 @@ typedef struct ISetupConfiguration2 ISetupConfiguration2;
 typedef struct ISetupPackageReference ISetupPackageReference;
 #endif
 
+#ifndef __ISetupProductReference_FWD_DEFINED__
+#define __ISetupProductReference_FWD_DEFINED__
+typedef struct ISetupProductReference ISetupProductReference;
+#endif
+
+#ifndef __ISetupProductReference2_FWD_DEFINED__
+#define __ISetupProductReference2_FWD_DEFINED__
+typedef struct ISetupProductReference2 ISetupProductReference2;
+#endif
+
 #ifndef __ISetupHelper_FWD_DEFINED__
 #define __ISetupHelper_FWD_DEFINED__
 typedef struct ISetupHelper ISetupHelper;
+#endif
+
+#ifndef __ISetupErrorInfo_FWD_DEFINED__
+#define __ISetupErrorInfo_FWD_DEFINED__
+typedef struct ISetupErrorInfo ISetupErrorInfo;
 #endif
 
 #ifndef __ISetupErrorState_FWD_DEFINED__
@@ -126,6 +146,11 @@ typedef struct ISetupErrorState ISetupErrorState;
 typedef struct ISetupErrorState2 ISetupErrorState2;
 #endif
 
+#ifndef __ISetupErrorState3_FWD_DEFINED__
+#define __ISetupErrorState3_FWD_DEFINED__
+typedef struct ISetupErrorState3 ISetupErrorState3;
+#endif
+
 #ifndef __ISetupFailedPackageReference_FWD_DEFINED__
 #define __ISetupFailedPackageReference_FWD_DEFINED__
 typedef struct ISetupFailedPackageReference ISetupFailedPackageReference;
@@ -136,6 +161,11 @@ typedef struct ISetupFailedPackageReference ISetupFailedPackageReference;
 typedef struct ISetupFailedPackageReference2 ISetupFailedPackageReference2;
 #endif
 
+#ifndef __ISetupFailedPackageReference3_FWD_DEFINED__
+#define __ISetupFailedPackageReference3_FWD_DEFINED__
+typedef struct ISetupFailedPackageReference3 ISetupFailedPackageReference3;
+#endif
+
 #ifndef __ISetupPropertyStore_FWD_DEFINED__
 #define __ISetupPropertyStore_FWD_DEFINED__
 typedef struct ISetupPropertyStore ISetupPropertyStore;
@@ -144,6 +174,11 @@ typedef struct ISetupPropertyStore ISetupPropertyStore;
 #ifndef __ISetupLocalizedPropertyStore_FWD_DEFINED__
 #define __ISetupLocalizedPropertyStore_FWD_DEFINED__
 typedef struct ISetupLocalizedPropertyStore ISetupLocalizedPropertyStore;
+#endif
+
+#ifndef __ISetupPolicy_FWD_DEFINED__
+#define __ISetupPolicy_FWD_DEFINED__
+typedef struct ISetupPolicy ISetupPolicy;
 #endif
 
 // Forward class declarations
@@ -345,6 +380,34 @@ struct DECLSPEC_UUID("89143C9A-05AF-49B0-B717-72E218A2185C") DECLSPEC_NOVTABLE I
     STDMETHOD(GetEnginePath)(
         _Outptr_result_maybenull_ BSTR* pbstrEnginePath
         ) = 0;
+};
+#endif
+
+EXTERN_C const IID IID_ISetupInstanceCatalog;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// Information about a catalog used to install an instance.
+/// </summary>
+struct DECLSPEC_UUID("9AD8E40F-39A2-40F1-BF64-0A6C50DD9EEB") DECLSPEC_NOVTABLE ISetupInstanceCatalog : public IUnknown
+{
+    /// <summary>
+    /// Gets catalog information properties.
+    /// </summary>
+    /// <param name="ppCatalogInfo">A pointer to an instance of <see cref="ISetupPropertyStore"/>.</param>
+    /// <returns>Standard HRESULT indicating success or failure, including E_FILENOTFOUND if the instance state does not exist and E_NOTFOUND if the property does not exist.</returns>
+    STDMETHOD(GetCatalogInfo)(
+        _Out_ ISetupPropertyStore** ppCatalogInfo
+    ) = 0;
+
+    /// <summary>
+    /// Gets a value indicating whether the catalog is a prerelease.
+    /// </summary>
+    /// <param name="pfIsPrerelease">Whether the catalog for the instance is a prerelease version.</param>
+    /// <returns>Standard HRESULT indicating success or failure, including E_FILENOTFOUND if the instance state does not exist and E_NOTFOUND if the property does not exist.</returns>
+    STDMETHOD(IsPrerelease)(
+        _Out_ VARIANT_BOOL* pfIsPrerelease
+    ) = 0;
 };
 #endif
 
@@ -574,6 +637,44 @@ struct DECLSPEC_UUID("da8d8a16-b2b6-4487-a2f1-594ccccd6bf5") DECLSPEC_NOVTABLE I
 };
 #endif
 
+EXTERN_C const IID IID_ISetupProductReference;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// A reference to a product package.
+/// </summary>
+struct DECLSPEC_UUID("a170b5ef-223d-492b-b2d4-945032980685") DECLSPEC_NOVTABLE ISetupProductReference : public ISetupPackageReference
+{
+    /// <summary>
+    /// Gets a value indicating whether the product package is installed.
+    /// </summary>
+    /// <param name="pfIsInstalled">A value indicating whether the product package is installed.</param>
+    /// <returns>Standard HRESULT indicating success or failure, including E_NOTSUPPORTED if the reference is not to a product, or E_UNEXPECTED if the Installed property is the wrong type.</returns>
+    STDMETHOD(GetIsInstalled)(
+        _Out_ VARIANT_BOOL* pfIsInstalled
+        ) = 0;
+};
+#endif
+
+EXTERN_C const IID IID_ISetupProductReference2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// A reference to a product package.
+/// </summary>
+struct DECLSPEC_UUID("279a5db3-7503-444b-b34d-308f961b9a06") DECLSPEC_NOVTABLE ISetupProductReference2 : public ISetupProductReference
+{
+    /// <summary>
+    /// Gets a value indicating whether the product supports extensions.
+    /// </summary>
+    /// <param name="pfSupportsExtensions">A value indicating whether the product supports extensions.</param>
+    /// <returns>Standard HRESULT indicating success or failure, including E_NOTSUPPORTED if the reference is not to a product, or E_UNEXPECTED if the SupportsExtensions property is the wrong type.</returns>
+    STDMETHOD(GetSupportsExtensions)(
+        _Out_ VARIANT_BOOL* pfSupportsExtensions
+        ) = 0;
+};
+#endif
+
 EXTERN_C const IID IID_ISetupHelper;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
@@ -608,6 +709,46 @@ struct DECLSPEC_UUID("42b21b78-6192-463e-87bf-d577838f1d5c") DECLSPEC_NOVTABLE I
         _Out_ PULONGLONG pullMinVersion,
         _Out_ PULONGLONG pullMaxVersion
         ) = 0;
+};
+#endif
+
+EXTERN_C const IID IID_ISetupErrorInfo;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// Information about errors that occured during install of an instance.
+/// </summary>
+/// <remarks>
+/// Objects may also implement <see cref="IErrorInfo"/> and <see cref="ISetupPropertyStore"/>.
+/// </remarks>
+struct DECLSPEC_UUID("2A2F3292-958E-4905-B36E-013BE84E27AB") DECLSPEC_NOVTABLE ISetupErrorInfo : public IUnknown
+{
+    /// <summary>
+    /// Gets the HRESULT of the error.
+    /// </summary>
+    /// <param name="plHResult">The HRESULT of the error.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetErrorHResult)(
+        _Out_ HRESULT* plHResult
+    ) = 0;
+
+    /// <summary>
+    /// Gets the class name of the error (exception).
+    /// </summary>
+    /// <param name="pbstrClassName">The class name of the error (exception).</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetErrorClassName)(
+        _Outptr_result_maybenull_ BSTR* pbstrClassName
+    ) = 0;
+
+    /// <summary>
+    /// Gets the error message.
+    /// </summary>
+    /// <param name="pbstrMessage">The error message.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetErrorMessage)(
+        _Outptr_result_maybenull_ BSTR* pbstrMessage
+    ) = 0;
 };
 #endif
 
@@ -654,6 +795,34 @@ struct DECLSPEC_UUID("9871385B-CA69-48F2-BC1F-7A37CBF0B1EF") DECLSPEC_NOVTABLE I
     /// <returns>Standard HRESULT indicating success or failure.</returns>
     STDMETHOD(GetErrorLogFilePath)(
         _Outptr_result_maybenull_ BSTR* pbstrErrorLogFilePath
+        ) = 0;
+
+    /// <summary>
+    /// Gets the path to the main setup log.
+    /// </summary>
+    /// <param name="pbstrChip">The path to the main setup log.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetLogFilePath)(
+        _Outptr_result_maybenull_ BSTR* pbstrLogFilePath
+        ) = 0;
+};
+#endif
+
+EXTERN_C const IID IID_ISetupErrorState3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// Information about the error state of an instance.
+/// </summary>
+struct DECLSPEC_UUID("290019AD-28E2-46D5-9DE5-DA4B6BCF8057") DECLSPEC_NOVTABLE ISetupErrorState3 : public ISetupErrorState2
+{
+    /// <summary>
+    /// Gets the runtime error that occured during install of an instance.
+    /// </summary>
+    /// <param name="pbstrChip">The runtime error that occured during install of an instance.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetRuntimeError)(
+        _Outptr_result_maybenull_ ISetupErrorInfo** ppErrorInfo
         ) = 0;
 };
 #endif
@@ -726,6 +895,35 @@ struct DECLSPEC_UUID("0FAD873E-E874-42E3-B268-4FE2F096B9CA") DECLSPEC_NOVTABLE I
 
 #endif
 
+EXTERN_C const IID IID_ISetupFailedPackageReference3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// A reference to a failed package.
+/// </summary>
+struct DECLSPEC_UUID("EBC3AE68-AD15-44E8-8377-39DBF0316F6C") DECLSPEC_NOVTABLE ISetupFailedPackageReference3 : public ISetupFailedPackageReference2
+{
+    /// <summary>
+    /// Gets the action attempted when the package failed.
+    /// </summary>
+    /// <param name="pbstrAction">The action, eg: Install, Download, etc.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetAction)(
+        _Outptr_result_maybenull_ BSTR* pbstrAction
+        ) = 0;
+
+    /// <summary>
+    /// Gets the return code of the failure.
+    /// </summary>
+    /// <param name="pbstrReturnCode">The return code.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetReturnCode)(
+        _Outptr_result_maybenull_ BSTR* pbstrReturnCode
+        ) = 0;
+};
+
+#endif
+
 EXTERN_C const IID IID_ISetupPropertyStore;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
@@ -792,6 +990,40 @@ struct DECLSPEC_UUID("5BB53126-E0D5-43DF-80F1-6B161E5C6F6C") DECLSPEC_NOVTABLE I
     STDMETHOD(GetValue)(
         _In_ LPCOLESTR pwszName,
         _In_ LCID lcid,
+        _Out_ LPVARIANT pvtValue
+        ) = 0;
+};
+
+#endif
+
+EXTERN_C const IID IID_ISetupPolicy;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+/// <summary>
+/// Gets setup policy values.
+/// </summary>
+/// <remarks>
+/// You can get this from an <see cref="ISetupConfiguration"/>.
+/// </remarks>
+struct DECLSPEC_UUID("E1DA4CBD-64C4-4C44-821D-98FAB64C4DA7") DECLSPEC_NOVTABLE ISetupPolicy : public IUnknown
+{
+    /// <summary>
+    /// Gets the value of the SharedInstallationPath policy.
+    /// </summary>
+    /// <param name="pbstrSharedInstallationPath">The value of the SharedInstallationPath policy.</param>
+    /// <returns>Standard HRESULT indicating success or failure.</returns>
+    STDMETHOD(GetSharedInstallationPath)(
+        _Out_ BSTR* pbstrSharedInstallationPath
+        ) = 0;
+
+    /// <summary>
+    /// Gets the value of a named policy.
+    /// </summary>
+    /// <param name="pwszName">The name of the policy to get.</param>
+    /// <param name="pvtValue">The value of the named policy.</param>
+    /// <returns>Standard HRESULT indicating success or failure, including E_NOTSUPPORTED if the policy is not supported by this implementation.</returns>
+    STDMETHOD(GetValue)(
+        _In_ LPCOLESTR pwszName,
         _Out_ LPVARIANT pvtValue
         ) = 0;
 };
