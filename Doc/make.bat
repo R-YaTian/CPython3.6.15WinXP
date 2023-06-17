@@ -7,7 +7,7 @@ set this=%~n0
 
 rem call ..\PCbuild\find_python.bat %PYTHON%
 
-if not defined PYTHON set PYTHON=python32
+if not defined PYTHON set PYTHON=py
 
 if not defined SPHINXBUILD (
     %PYTHON% -c "import sphinx" > nul 2> nul
@@ -139,7 +139,7 @@ if "%1" EQU "htmlhelp" (
 cmd /S /C "%SPHINXBUILD% %SPHINXOPTS% -b%1 -dbuild\doctrees . "%BUILDDIR%\%1" %2 %3 %4 %5 %6 %7 %8 %9"
 
 if "%1" EQU "htmlhelp" (
-    cmd /C "%HTMLHELP%" "%BUILDDIR%\htmlhelp\python%DISTVERSION:.=%.hhp"
+    cmd /C "%HTMLHELP%" build\htmlhelp\python%DISTVERSION:.=%.hhp
     rem hhc.exe seems to always exit with code 1, reset to 0 for less than 2
     if not errorlevel 2 cmd /C exit /b 0
 )
