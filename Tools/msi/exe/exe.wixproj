@@ -41,11 +41,11 @@
     </Target>
     
     <Target Name="_CopyMiscNews" AfterTargets="PrepareForBuild" Condition="Exists('$(PySourcePath)Misc\NEWS')">
-        <Copy SourceFiles="$(PySourcePath)Misc\NEWS" DestinationFiles="$(BuildPath)NEWS.txt" />
+        <Copy SourceFiles="$(PySourcePath)Misc\NEWS" DestinationFiles="$(BuildPath)NEWS" />
     </Target>
     
     <Target Name="_MergeMiscNewsWithBlurb" AfterTargets="PrepareForBuild" Condition="$(Blurb) != '' and !Exists('$(PySourcePath)Misc\NEWS')">
-        <Exec Command="$(Blurb) merge -f &quot;$(BuildPath)NEWS.txt&quot;" WorkingDirectory="$(PCBuild)" />
+        <Exec Command="$(Blurb) merge -f &quot;$(BuildPath)NEWS&quot;" WorkingDirectory="$(PCBuild)" />
     </Target>
     
     <Target Name="_MergeMiscNewsWithPython" AfterTargets="PrepareForBuild" Condition="$(Blurb) == '' and !Exists('$(PySourcePath)Misc\NEWS')">
@@ -59,7 +59,7 @@
             <HostPython Condition="$(HostPython.Contains(';'))">$(HostPython.Remove($(HostPython.IndexOf(';'))))</HostPython>
         </PropertyGroup>
         <Exec Command="&quot;$(HostPython)&quot; -m pip install -U blurb" WorkingDirectory="$(PCBuild)" />
-        <Exec Command="&quot;$(HostPython)&quot; -m blurb merge -f &quot;$(BuildPath)NEWS.txt&quot;" WorkingDirectory="$(PCBuild)" />
+        <Exec Command="&quot;$(HostPython)&quot; -m blurb merge -f &quot;$(BuildPath)NEWS&quot;" WorkingDirectory="$(PCBuild)" />
     </Target>
     
     <Import Project="..\msi.targets" />
