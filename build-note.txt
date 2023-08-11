@@ -6,4 +6,4 @@ Should install VS2022's v141 and v141_xp toolset, VS15 BuildTools, 10.0.10240.0 
 Should install mingw:gendef also
 Then run:
 set PYTHON=xxx (The Python executable with Sphinx 1.8.5 installed)
-buildrelease.bat -o out -x86 --skip-nuget --skip-zip
+buildrelease.bat -o out -x86 --skip-nuget
